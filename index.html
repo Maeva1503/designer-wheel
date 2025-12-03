@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title> Designer Wheel</title>
+<title>Designer Wheel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root {
     --bg: #020308;
     --gold: #f5c76c;
     --gold-soft: #f7ddb0;
-    --highlight: rgba(245, 199, 108, 0.6);
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   body {
@@ -35,15 +38,17 @@
     text-shadow:
       0 0 8px rgba(245, 199, 108, 0.6),
       0 0 22px rgba(0, 0, 0, 0.9);
+    text-align: center;
   }
 
   .subtitle {
     font-size: 13px;
     opacity: .75;
-    margin-bottom: 6px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    text-align: center;
   }
 
-  /* Pointe */
   #pointer {
     width: 0;
     height: 0;
@@ -60,11 +65,13 @@
     to   { transform: translateY(4px); }
   }
 
-  /* Roue obsidian */
   #wheel-wrapper {
     width: 360px;
     height: 360px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #wheel {
@@ -89,7 +96,7 @@
     overflow: hidden;
   }
 
-  /* Inner ring */
+  /* Inner ring (sans texte) */
   #wheel::before {
     content:"";
     position:absolute;
@@ -100,37 +107,12 @@
     box-shadow: inset 0 0 18px rgba(0,0,0,.9);
   }
 
-  /* Hub central */
-  #wheel::after {
-    content:"HIRE ME";
-    position:absolute;
-    width:130px;
-    height:130px;
-    border-radius:50%;
-    left:50%;
-    top:50%;
-    transform:translate(-50%, -50%);
-    background: radial-gradient(circle, #fff, #ffe4aa 40%, #b17722 100%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    font-weight:800;
-    letter-spacing:.15em;
-    color:#3e2507;
-    box-shadow:
-      0 0 24px rgba(0,0,0,1),
-      0 0 65px rgba(245,199,108,.95),
-      inset 0 0 18px rgba(255,245,215,.95);
-    text-transform:uppercase;
-  }
-
-  /* Ticks */
   .ticks {
     position:absolute;
     inset:6px;
     pointer-events:none;
   }
+
   .tick {
     position:absolute;
     width:4px;
@@ -142,7 +124,6 @@
     transform-origin:50% 178px;
   }
 
-  /* Winner highlight — FIXED (no animated ray) */
   #winnerGlow {
     position:absolute;
     width:50%;
@@ -159,7 +140,6 @@
     display:none;
   }
 
-  /* Particles */
   #particles {
     position:absolute;
     inset:0;
@@ -181,30 +161,38 @@
     100% { transform: translate(var(--dx), var(--dy)) scale(.8); opacity:0; }
   }
 
-  /* Button */
   #spinBtn {
-    margin-top:16px;
-    padding:12px 32px;
-    border-radius:999px;
+    margin-top: 18px;
+    padding: 12px 32px;
+    border-radius: 999px;
     background: radial-gradient(circle, #2a2114, #15100a);
-    border:1px solid var(--gold);
-    color:var(--gold-soft);
-    font-weight:700;
-    letter-spacing:.14em;
-    cursor:pointer;
-    box-shadow:0 0 14px rgba(245,199,108,.5);
+    border: 1px solid var(--gold);
+    color: var(--gold-soft);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 0 14px rgba(245,199,108,.5);
+  }
+
+  #spinBtn:disabled {
+    opacity: .6;
+    cursor: default;
   }
 
   #result {
-    margin-top:8px;
-    opacity:0;
-    transition:.4s;
+    margin-top: 10px;
+    opacity: 0;
+    transition: .4s;
+    font-size: 14px;
   }
-  #result.visible { opacity:1; }
+
+  #result.visible { opacity: 1; }
 
   #result a {
-    color:var(--gold-soft);
-    text-decoration:none;
+    color: var(--gold-soft);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(247, 201, 108, 0.6);
   }
 
   #flashOverlay {
@@ -215,7 +203,27 @@
     opacity:0;
     transition:opacity .22s;
   }
+
   #flashOverlay.active { opacity:1; }
+
+  .signature {
+    position: fixed;
+    bottom: 14px;
+    right: 18px;
+    font-size: 11px;
+    opacity: 0.55;
+  }
+
+  .signature span {
+    color: var(--gold-soft);
+  }
+
+  @media (max-width: 480px) {
+    #wheel-wrapper {
+      width: 290px;
+      height: 290px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -228,8 +236,30 @@
 <div id="wheel-wrapper">
   <div id="wheel">
     <div class="ticks">
-      <!-- 24 ticks -->
-      ${Array.from({length:24}, (_,i)=>`<div class="tick" style="transform:rotate(${i*15}deg);"></div>`).join("")}
+      <div class="tick" style="transform: rotate(0deg);"></div>
+      <div class="tick" style="transform: rotate(15deg);"></div>
+      <div class="tick" style="transform: rotate(30deg);"></div>
+      <div class="tick" style="transform: rotate(45deg);"></div>
+      <div class="tick" style="transform: rotate(60deg);"></div>
+      <div class="tick" style="transform: rotate(75deg);"></div>
+      <div class="tick" style="transform: rotate(90deg);"></div>
+      <div class="tick" style="transform: rotate(105deg);"></div>
+      <div class="tick" style="transform: rotate(120deg);"></div>
+      <div class="tick" style="transform: rotate(135deg);"></div>
+      <div class="tick" style="transform: rotate(150deg);"></div>
+      <div class="tick" style="transform: rotate(165deg);"></div>
+      <div class="tick" style="transform: rotate(180deg);"></div>
+      <div class="tick" style="transform: rotate(195deg);"></div>
+      <div class="tick" style="transform: rotate(210deg);"></div>
+      <div class="tick" style="transform: rotate(225deg);"></div>
+      <div class="tick" style="transform: rotate(240deg);"></div>
+      <div class="tick" style="transform: rotate(255deg);"></div>
+      <div class="tick" style="transform: rotate(270deg);"></div>
+      <div class="tick" style="transform: rotate(285deg);"></div>
+      <div class="tick" style="transform: rotate(300deg);"></div>
+      <div class="tick" style="transform: rotate(315deg);"></div>
+      <div class="tick" style="transform: rotate(330deg);"></div>
+      <div class="tick" style="transform: rotate(345deg);"></div>
     </div>
 
     <div id="winnerGlow"></div>
@@ -241,6 +271,10 @@
 <div id="result"></div>
 
 <div id="flashOverlay"></div>
+
+<div class="signature">
+  Mini game concept by <span>Maeva Maurel</span> – Graphic Designer
+</div>
 
 <script>
   const wheel = document.getElementById("wheel");
@@ -349,7 +383,7 @@
       spawnParticles();
       playWin();
 
-      resultEl.innerHTML=`Result: <a href="https://www.behance.net/maevamaurel1" target="_blank">${prize}</a>`;
+      resultEl.innerHTML=`Result: <a href="https://www.behance.net/maevamaurel1" target="_blank" rel="noopener noreferrer">${prize}</a>`;
       resultEl.classList.add("visible");
 
       spinning=false;

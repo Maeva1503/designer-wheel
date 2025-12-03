@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Designer Wheel</title>
+<title>Obsidian Gold – Designer Wheel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root {
@@ -11,9 +11,7 @@
     --gold-soft: #f7ddb0;
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
@@ -28,6 +26,7 @@
     font-family: system-ui, sans-serif;
     color: #fff;
     overflow: hidden;
+    text-align: center;
   }
 
   .title {
@@ -38,15 +37,13 @@
     text-shadow:
       0 0 8px rgba(245, 199, 108, 0.6),
       0 0 22px rgba(0, 0, 0, 0.9);
-    text-align: center;
   }
 
   .subtitle {
     font-size: 13px;
     opacity: .75;
     margin-top: 4px;
-    margin-bottom: 8px;
-    text-align: center;
+    margin-bottom: 12px;
   }
 
   #pointer {
@@ -57,7 +54,7 @@
     border-top: 35px solid var(--gold);
     filter: drop-shadow(0 0 10px rgba(245,199,108,.9));
     animation: pointerPulse 1.2s ease-in-out infinite alternate;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   @keyframes pointerPulse {
@@ -96,7 +93,7 @@
     overflow: hidden;
   }
 
-  /* Inner ring (sans texte) */
+  /* inner ring, pure déco, pas de texte */
   #wheel::before {
     content:"";
     position:absolute;
@@ -124,6 +121,7 @@
     transform-origin:50% 178px;
   }
 
+  /* highlight du segment gagnant (fixe, sans dégradé animé) */
   #winnerGlow {
     position:absolute;
     width:50%;
@@ -162,7 +160,7 @@
   }
 
   #spinBtn {
-    margin-top: 18px;
+    margin-top: 26px;          /* bien sous la roue */
     padding: 12px 32px;
     border-radius: 999px;
     background: radial-gradient(circle, #2a2114, #15100a);
@@ -181,18 +179,34 @@
   }
 
   #result {
-    margin-top: 10px;
+    margin-top: 14px;
     opacity: 0;
     transition: .4s;
-    font-size: 14px;
   }
 
   #result.visible { opacity: 1; }
 
-  #result a {
-    color: var(--gold-soft);
+  /* Résultat = gros bouton clair vers Behance */
+  #resultLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: radial-gradient(circle, #f5c76c, #b8862b);
+    color: #2b1b05;
     text-decoration: none;
-    border-bottom: 1px dashed rgba(247, 201, 108, 0.6);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    box-shadow:
+      0 0 14px rgba(245,199,108,0.8),
+      0 0 26px rgba(0,0,0,0.9);
+  }
+
+  #resultLink:hover {
+    filter: brightness(1.06);
   }
 
   #flashOverlay {
@@ -228,7 +242,7 @@
 </head>
 <body>
 
-<div class="title">Designer Jackpot</div>
+<div class="title">DESIGNER JACKPOT</div>
 <div class="subtitle">Spin the wheel to see what you win.</div>
 
 <div id="pointer"></div>
@@ -268,17 +282,22 @@
 </div>
 
 <button id="spinBtn">Spin</button>
-<div id="result"></div>
+
+<div id="result">
+  <!-- rempli par JS -->
+  <a id="resultLink" href="https://www.behance.net/maevamaurel1" target="_blank" rel="noopener noreferrer"></a>
+</div>
 
 <div id="flashOverlay"></div>
 
 <div class="signature">
-  Mini game concept by <span>Maeva Maurel</span> – Graphic Designer
+  Mini game concept by <span>Maeva Maurel</span> – Motion Designer
 </div>
 
 <script>
   const wheel = document.getElementById("wheel");
-  const resultEl = document.getElementById("result");
+  const result = document.getElementById("result");
+  const resultLink = document.getElementById("resultLink");
   const spinBtn = document.getElementById("spinBtn");
   const winnerGlow = document.getElementById("winnerGlow");
   const flashOverlay = document.getElementById("flashOverlay");
@@ -351,45 +370,44 @@
     }
   }
 
-  spinBtn.addEventListener("click",()=>{
-    if(spinning) return;
-    spinning=true;
-    spinBtn.disabled=true;
-    resultEl.classList.remove("visible");
-    resultEl.textContent="";
-    winnerGlow.style.display="none";
-
+  spinBtn.addEventListener("click", () => {
+    if (spinning) return;
+    spinning = true;
+    spinBtn.disabled = true;
+    result.classList.remove("visible");
+    winnerGlow.style.display = "none";
     initAudio();
 
-    const base=360*4;
-    const extra=Math.floor(Math.random()*360);
-    const total=base+extra;
+    const base = 360 * 4;
+    const extra = Math.floor(Math.random() * 360);
+    const total = base + extra;
 
-    wheel.style.transform=`rotate(${total}deg)`;
+    wheel.style.transform = `rotate(${total}deg)`;
 
-    const tickInterval=setInterval(playTick,110);
+    const tickInterval = setInterval(playTick, 110);
 
-    setTimeout(()=>{
+    setTimeout(() => {
       clearInterval(tickInterval);
 
-      const normalized=((total % 360)+360)%360;
-      const index=Math.floor(((360-normalized)%360)/90);
-      const prize=prizes[index];
+      const normalized = ((total % 360) + 360) % 360;
+      const index = Math.floor(((360 - normalized) % 360) / 90);
+      const prize = prizes[index];
 
-      winnerGlow.style.display="block";
-      winnerGlow.style.transform=`rotate(${index*90}deg)`;
+      winnerGlow.style.display = "block";
+      winnerGlow.style.transform = `rotate(${index * 90}deg)`;
 
       flash();
       spawnParticles();
       playWin();
 
-      resultEl.innerHTML=`Result: <a href="https://www.behance.net/maevamaurel1" target="_blank" rel="noopener noreferrer">${prize}</a>`;
-      resultEl.classList.add("visible");
+      resultLink.textContent = prize + " – View portfolio on Behance";
+      result.classList.add("visible");
 
-      spinning=false;
-      spinBtn.disabled=false;
-    },4300);
+      spinning = false;
+      spinBtn.disabled = false;
+    }, 4300);
   });
 </script>
 </body>
 </html>
+

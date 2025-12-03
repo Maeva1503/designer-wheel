@@ -169,8 +169,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;                   /* caché */
-    transition: opacity 0.4s ease;
   }
 
   .segment-label span {
@@ -183,63 +181,84 @@
     font-weight: 600;
     display: block;
 
-    /* état caché (avant active) */
-    transform: scale(0.7);
-    filter: blur(4px);
     opacity: 0;
+    filter: blur(4px);
   }
 
-  /* Active = segment gagnant → texte visible + animation */
+  /* Segment gagnant → animation arcade / punchy */
   .segment-label.active span {
-    animation: winnerPop 0.45s ease-out forwards;
+    animation: punchyArcade 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
-  @keyframes winnerPop {
+  /* 🎮 Animation arcade / exagérée sans casser l'orientation */
+  @keyframes punchyArcade {
     0% {
-      transform: scale(0.7);
-      filter: blur(4px);
       opacity: 0;
+      filter: blur(6px) brightness(0.6);
+      font-size: 6px;
+      letter-spacing: 0.18em;
+      text-shadow: 0 0 0 rgba(255, 255, 255, 0);
     }
-    60% {
-      transform: scale(1.1);
-      filter: blur(0);
+    20% {
       opacity: 1;
+      filter: blur(1px) brightness(1.4);
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+    }
+    45% {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+    }
+    65% {
+      font-size: 16px;
+    }
+    80% {
+      font-size: 13px;
+    }
+    88% {
+      font-size: 14px;
+    }
+    96% {
+      font-size: 12px;
     }
     100% {
-      transform: scale(1);
-      filter: blur(0);
       opacity: 1;
+      filter: blur(0) brightness(1.1);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
     }
   }
 
-  /* Position et rotation de chaque label sur la roue */
+  /* Position / orientation des labels sur la roue */
 
   .segment-label:nth-of-type(1) {
     transform: rotate(45deg);
   }
   .segment-label:nth-of-type(1) span {
-    transform: rotate(-45deg) scale(0.7);
+    transform: rotate(-45deg);
   }
 
   .segment-label:nth-of-type(2) {
     transform: rotate(135deg);
   }
   .segment-label:nth-of-type(2) span {
-    transform: rotate(-135deg) scale(0.7);
+    transform: rotate(-135deg);
   }
 
   .segment-label:nth-of-type(3) {
     transform: rotate(225deg);
   }
   .segment-label:nth-of-type(3) span {
-    transform: rotate(-225deg) scale(0.7);
+    transform: rotate(-225deg);
   }
 
   .segment-label:nth-of-type(4) {
     transform: rotate(315deg);
   }
   .segment-label:nth-of-type(4) span {
-    transform: rotate(-315deg) scale(0.7);
+    transform: rotate(-315deg);
     color: #333;
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
   }
@@ -430,7 +449,7 @@
 </div>
 
 <div class="signature">
-  Mini game concept by <span>Maeva Maurel</span> – Graphic Designer
+  Mini game concept by <span>Maeva Maurel</span> – Motion Designer
 </div>
 
 <script>

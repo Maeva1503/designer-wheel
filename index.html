@@ -7,15 +7,9 @@
 <style>
   :root {
     --bg: #020308;
-    --bg2: #050815;
     --gold: #f5c76c;
-    --gold-deep: #b8862b;
     --gold-soft: #f7ddb0;
     --highlight: rgba(245, 199, 108, 0.6);
-  }
-
-  * {
-    box-sizing: border-box;
   }
 
   body {
@@ -28,23 +22,14 @@
     background:
       radial-gradient(circle at top, #0c1020 0, transparent 55%),
       radial-gradient(circle at bottom, #020308 0, #010107 65%);
-    color: #f5f5f5;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: system-ui, sans-serif;
+    color: #fff;
     overflow: hidden;
-  }
-
-  .container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    z-index: 1;
   }
 
   .title {
     font-size: 22px;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold-soft);
     text-shadow:
@@ -54,49 +39,39 @@
 
   .subtitle {
     font-size: 13px;
-    opacity: 0.75;
+    opacity: .75;
+    margin-bottom: 6px;
   }
 
-  /* POINTE VERS LE BAS */
+  /* Pointe */
   #pointer {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-top: 35px solid var(--gold);
-    filter:
-      drop-shadow(0 0 8px rgba(245, 199, 108, 0.9))
-      drop-shadow(0 0 18px rgba(0, 0, 0, 0.9));
-    transform-origin: 50% 0%;
+    filter: drop-shadow(0 0 10px rgba(245,199,108,.9));
     animation: pointerPulse 1.2s ease-in-out infinite alternate;
-    z-index: 5;
+    margin-bottom: 6px;
   }
 
   @keyframes pointerPulse {
-    from { transform: translateY(0) scale(1); }
-    to   { transform: translateY(4px) scale(1.06); }
+    from { transform: translateY(0); }
+    to   { transform: translateY(4px); }
   }
 
+  /* Roue obsidian */
   #wheel-wrapper {
-    position: relative;
     width: 360px;
     height: 360px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 4px;
+    position: relative;
   }
 
-  /* 🖤 OBSIDIAN BLACK & GOLD WHEEL */
   #wheel {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    transition: transform 4.2s cubic-bezier(0.12, 0.35, 0.08, 1);
     background:
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 55%),
       conic-gradient(
         from -90deg,
         #111319 0deg 90deg,
@@ -106,381 +81,174 @@
       );
     border: 10px solid rgba(191, 139, 46, 0.85);
     box-shadow:
-      0 0 32px rgba(0, 0, 0, 1),
-      0 0 72px rgba(0, 0, 0, 0.9),
-      0 0 42px rgba(245, 199, 108, 0.25);
+      0 0 32px rgba(0,0,0,1),
+      0 0 72px rgba(0,0,0,0.9),
+      0 0 42px rgba(245,199,108,0.25);
+    position: relative;
+    transition: transform 4.2s cubic-bezier(0.12,0.35,0.08,1);
+    overflow: hidden;
   }
 
-  /* Anneau intérieur métal noir + liseré or */
+  /* Inner ring */
   #wheel::before {
-    content: "";
-    position: absolute;
-    inset: 20px;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 55%),
-      radial-gradient(circle at 70% 15%, rgba(255, 255, 255, 0.09), transparent 55%);
-    border: 3px solid rgba(245, 199, 108, 0.4);
-    box-shadow:
-      inset 0 0 18px rgba(0, 0, 0, 0.9),
-      0 0 24px rgba(0, 0, 0, 0.9);
+    content:"";
+    position:absolute;
+    inset:20px;
+    border-radius:50%;
+    border:3px solid rgba(245,199,108,.4);
+    background: radial-gradient(circle, rgba(255,255,255,.06), transparent 55%);
+    box-shadow: inset 0 0 18px rgba(0,0,0,.9);
   }
 
-  /* Médaillon central gold */
+  /* Hub central */
   #wheel::after {
-    content: "HIRE ME";
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background:
-      radial-gradient(circle at 30% 30%, #ffffff, #ffe4aa 40%, #b17722 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 14px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #3e2507;
-    text-shadow:
-      0 0 10px rgba(255, 243, 210, 0.9),
-      0 2px 4px rgba(0, 0, 0, 0.7);
+    content:"HIRE ME";
+    position:absolute;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    background: radial-gradient(circle, #fff, #ffe4aa 40%, #b17722 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:.15em;
+    color:#3e2507;
     box-shadow:
-      0 0 24px rgba(0, 0, 0, 1),
-      0 0 65px rgba(245, 199, 108, 0.95),
-      inset 0 0 18px rgba(255, 245, 215, 0.95);
+      0 0 24px rgba(0,0,0,1),
+      0 0 65px rgba(245,199,108,.95),
+      inset 0 0 18px rgba(255,245,215,.95);
+    text-transform:uppercase;
   }
 
-  /* TICKS (petits repères métal) */
+  /* Ticks */
   .ticks {
-    position: absolute;
-    inset: 6px;
-    border-radius: 50%;
-    pointer-events: none;
+    position:absolute;
+    inset:6px;
+    pointer-events:none;
   }
-
   .tick {
-    position: absolute;
-    width: 3px;
-    height: 10px;
-    background: linear-gradient(to bottom, #f5c76c, #433011);
-    left: 50%;
-    top: 2px;
-    transform-origin: 50% 178px;
-    border-radius: 999px;
-    opacity: 0.85;
+    position:absolute;
+    width:4px;
+    height:14px;
+    left:50%;
+    top:2px;
+    background:linear-gradient(to bottom, #ffe9b0, #5d3f13);
+    border-radius:999px;
+    transform-origin:50% 178px;
   }
 
-  .tick:nth-child(4n) {
-    height: 16px;
-    width: 4px;
-    background: linear-gradient(to bottom, #ffe9b0, #5d3f13);
-  }
-
-  /* TEXTES TOUJOURS VISIBLES, CENTRÉS DANS CHAQUE SEGMENT */
-  .segment-label {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    left: 50%;
-    top: 50%;
-    transform-origin: 0% 0%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
-
-  .segment-label span {
-    max-width: 130px;
-    text-align: center;
-    line-height: 1.25;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fdf6dd;
-    text-shadow:
-      0 0 6px rgba(0, 0, 0, 0.85),
-      0 0 12px rgba(245, 199, 108, 0.4);
-  }
-
-  .segment-label:nth-of-type(1) {
-    transform: rotate(45deg);
-  }
-  .segment-label:nth-of-type(1) span {
-    transform: rotate(-45deg);
-  }
-
-  .segment-label:nth-of-type(2) {
-    transform: rotate(135deg);
-  }
-  .segment-label:nth-of-type(2) span {
-    transform: rotate(-135deg);
-  }
-
-  .segment-label:nth-of-type(3) {
-    transform: rotate(225deg);
-  }
-  .segment-label:nth-of-type(3) span {
-    transform: rotate(-225deg);
-  }
-
-  .segment-label:nth-of-type(4) {
-    transform: rotate(315deg);
-  }
-  .segment-label:nth-of-type(4) span {
-    transform: rotate(-315deg);
-    color: #2e210b;
-    text-shadow:
-      0 0 6px rgba(255, 255, 255, 0.6),
-      0 0 12px rgba(255, 255, 255, 0.3);
-  }
-
-  /* GLOW SEGMENT GAGNANT – OBSIDIAN GOLD */
+  /* Winner highlight — FIXED (no animated ray) */
   #winnerGlow {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    left: 50%;
-    top: 50%;
-    transform-origin: 0 0;
-    border-radius: 0 230px 0 0;
-    pointer-events: none;
-    display: none;
-    background:
-      radial-gradient(circle at 40% 40%, rgba(255, 240, 200, 0.9), rgba(245, 199, 108, 0.0) 65%);
+    position:absolute;
+    width:50%;
+    height:50%;
+    left:50%;
+    top:50%;
+    transform-origin:0 0;
+    border-radius:0 230px 0 0;
+    background: radial-gradient(circle at 40% 40%, rgba(255,240,200,.9), transparent 70%);
     box-shadow:
-      0 0 32px 18px rgba(255, 225, 160, 0.45),
-      0 0 85px 35px rgba(245, 199, 108, 0.4);
-    animation: winnerGlow 1.25s ease-in-out infinite alternate;
-    mix-blend-mode: screen;
+      0 0 32px 18px rgba(255,225,160,.45),
+      0 0 85px 35px rgba(245,199,108,.4);
+    mix-blend-mode:screen;
+    display:none;
   }
 
-  @keyframes winnerGlow {
-    0% { opacity: 0.55; }
-    100% { opacity: 1; }
-  }
-
-  /* Rayon lumineux dans le segment gagnant */
-  #winnerGlow::before {
-    content: "";
-    position: absolute;
-    width: 160%;
-    height: 160%;
-    left: -10%;
-    top: -30%;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg 310deg,
-      rgba(255, 250, 230, 0.95) 325deg 360deg
-    );
-    mix-blend-mode: screen;
-    opacity: 0.9;
-    filter: blur(1px);
-    animation: spinRay 1.4s linear infinite;
-  }
-
-  @keyframes spinRay {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  /* PARTICLES GOLD */
+  /* Particles */
   #particles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: visible;
+    position:absolute;
+    inset:0;
+    pointer-events:none;
   }
 
   .particle {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffffff, var(--gold));
-    box-shadow: 0 0 10px rgba(245, 199, 108, 0.9);
-    opacity: 0;
-    animation: particleFly 0.8s ease-out forwards;
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background: radial-gradient(circle, #fff, var(--gold));
+    opacity:0;
+    animation: particleFly .8s ease-out forwards;
   }
 
   @keyframes particleFly {
-    0% {
-      transform: translate(0, 0) scale(0.2);
-      opacity: 1;
-    }
-    70% {
-      opacity: 1;
-    }
-    100% {
-      transform: translate(var(--dx), var(--dy)) scale(0.8);
-      opacity: 0;
-    }
+    0% { transform:scale(.2); opacity:1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(.8); opacity:0; }
   }
 
-  /* BOUTON + RESULT */
+  /* Button */
   #spinBtn {
-    margin-top: 12px;
-    padding: 12px 34px;
-    font-size: 15px;
-    border-radius: 999px;
-    border: 1px solid rgba(245, 199, 108, 0.9);
-    background:
-      radial-gradient(circle at 30% 30%, #2a2114, #15100a 55%);
-    color: var(--gold-soft);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow:
-      0 0 12px rgba(245, 199, 108, 0.7),
-      0 0 20px rgba(0, 0, 0, 0.9);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-  }
-
-  #spinBtn:hover:not(:disabled) {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow:
-      0 0 18px rgba(245, 199, 108, 0.95),
-      0 0 26px rgba(0, 0, 0, 0.9);
-    filter: brightness(1.05);
-  }
-
-  #spinBtn:disabled {
-    opacity: 0.55;
-    cursor: default;
+    margin-top:16px;
+    padding:12px 32px;
+    border-radius:999px;
+    background: radial-gradient(circle, #2a2114, #15100a);
+    border:1px solid var(--gold);
+    color:var(--gold-soft);
+    font-weight:700;
+    letter-spacing:.14em;
+    cursor:pointer;
+    box-shadow:0 0 14px rgba(245,199,108,.5);
   }
 
   #result {
-    min-height: 22px;
-    font-size: 14px;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    margin-top:8px;
+    opacity:0;
+    transition:.4s;
   }
-
-  #result.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  #result.visible { opacity:1; }
 
   #result a {
-    color: var(--gold-soft);
-    text-decoration: none;
-    border-bottom: 1px dashed rgba(247, 201, 108, 0.6);
+    color:var(--gold-soft);
+    text-decoration:none;
   }
 
-  #result a:hover {
-    filter: brightness(1.1);
-  }
-
-  .signature {
-    position: fixed;
-    bottom: 14px;
-    right: 18px;
-    font-size: 11px;
-    opacity: 0.55;
-  }
-
-  .signature span {
-    color: var(--gold-soft);
-  }
-
-  /* FLASH ÉCRAN GOLD */
   #flashOverlay {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 235, 200, 0.8), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.22s ease-out;
-    z-index: 10;
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background: radial-gradient(circle, rgba(255,235,200,.8), transparent 70%);
+    opacity:0;
+    transition:opacity .22s;
   }
-
-  #flashOverlay.active {
-    opacity: 1;
-  }
-
-  @media (max-width: 480px) {
-    #wheel-wrapper {
-      width: 290px;
-      height: 290px;
-    }
-  }
+  #flashOverlay.active { opacity:1; }
 </style>
 </head>
 <body>
 
-<div id="flashOverlay"></div>
+<div class="title">Designer Jackpot</div>
+<div class="subtitle">Spin the wheel to see what you win.</div>
 
-<div class="container">
-  <div class="title">Designer Jackpot</div>
-  <div class="subtitle">Spin the wheel to see what you win if you hire me.</div>
+<div id="pointer"></div>
 
-  <div id="pointer"></div>
-
-  <div id="wheel-wrapper">
-    <div id="wheel">
-      <!-- ticks -->
-      <div class="ticks">
-        <div class="tick" style="transform: rotate(0deg);"></div>
-        <div class="tick" style="transform: rotate(15deg);"></div>
-        <div class="tick" style="transform: rotate(30deg);"></div>
-        <div class="tick" style="transform: rotate(45deg);"></div>
-        <div class="tick" style="transform: rotate(60deg);"></div>
-        <div class="tick" style="transform: rotate(75deg);"></div>
-        <div class="tick" style="transform: rotate(90deg);"></div>
-        <div class="tick" style="transform: rotate(105deg);"></div>
-        <div class="tick" style="transform: rotate(120deg);"></div>
-        <div class="tick" style="transform: rotate(135deg);"></div>
-        <div class="tick" style="transform: rotate(150deg);"></div>
-        <div class="tick" style="transform: rotate(165deg);"></div>
-        <div class="tick" style="transform: rotate(180deg);"></div>
-        <div class="tick" style="transform: rotate(195deg);"></div>
-        <div class="tick" style="transform: rotate(210deg);"></div>
-        <div class="tick" style="transform: rotate(225deg);"></div>
-        <div class="tick" style="transform: rotate(240deg);"></div>
-        <div class="tick" style="transform: rotate(255deg);"></div>
-        <div class="tick" style="transform: rotate(270deg);"></div>
-        <div class="tick" style="transform: rotate(285deg);"></div>
-        <div class="tick" style="transform: rotate(300deg);"></div>
-        <div class="tick" style="transform: rotate(315deg);"></div>
-        <div class="tick" style="transform: rotate(330deg);"></div>
-        <div class="tick" style="transform: rotate(345deg);"></div>
-      </div>
-
-      <!-- textes -->
-      <div class="segment-label"><span>Hire a promising designer</span></div>
-      <div class="segment-label"><span>Have a highly motivated designer</span></div>
-      <div class="segment-label"><span>Work with a very available graphic designer</span></div>
-      <div class="segment-label"><span>Have an enthusiastic graphic designer</span></div>
-
-      <!-- glow segment gagnant -->
-      <div id="winnerGlow"></div>
-
-      <!-- particules -->
-      <div id="particles"></div>
+<div id="wheel-wrapper">
+  <div id="wheel">
+    <div class="ticks">
+      <!-- 24 ticks -->
+      ${Array.from({length:24}, (_,i)=>`<div class="tick" style="transform:rotate(${i*15}deg);"></div>`).join("")}
     </div>
+
+    <div id="winnerGlow"></div>
+    <div id="particles"></div>
   </div>
-
-  <button id="spinBtn">Spin</button>
-  <div id="result"></div>
 </div>
 
-<div class="signature">
-  Mini game concept by <span>Maeva Maurel</span> – Graphic Designer
-</div>
+<button id="spinBtn">Spin</button>
+<div id="result"></div>
+
+<div id="flashOverlay"></div>
 
 <script>
   const wheel = document.getElementById("wheel");
-  const spinBtn = document.getElementById("spinBtn");
   const resultEl = document.getElementById("result");
+  const spinBtn = document.getElementById("spinBtn");
   const winnerGlow = document.getElementById("winnerGlow");
-  const particlesContainer = document.getElementById("particles");
   const flashOverlay = document.getElementById("flashOverlay");
+  const particlesContainer = document.getElementById("particles");
 
   const prizes = [
     "Hire a promising designer",
@@ -491,12 +259,9 @@
 
   let spinning = false;
   let audioCtx = null;
-  let tickInterval = null;
 
   function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
   function playTick() {
@@ -504,12 +269,12 @@
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.frequency.value = 1200;
-    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+    gain.gain.setValueAtTime(.12, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime+.08);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start();
-    osc.stop(audioCtx.currentTime + 0.08);
+    osc.stop(audioCtx.currentTime+.08);
   }
 
   function playWin() {
@@ -517,98 +282,79 @@
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     const now = audioCtx.currentTime;
-
-    osc.type = "triangle";
+    osc.type="triangle";
     osc.frequency.setValueAtTime(600, now);
-    osc.frequency.linearRampToValueAtTime(1200, now + 0.35);
-
-    gain.gain.setValueAtTime(0.18, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-
+    osc.frequency.linearRampToValueAtTime(1200, now+.35);
+    gain.gain.setValueAtTime(.2, now);
+    gain.gain.exponentialRampToValueAtTime(.001, now+.5);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
-    osc.stop(now + 0.5);
+    osc.stop(now+.5);
   }
 
-  function triggerFlash() {
+  function flash() {
     flashOverlay.classList.add("active");
-    setTimeout(() => {
-      flashOverlay.classList.remove("active");
-    }, 160);
+    setTimeout(()=>flashOverlay.classList.remove("active"),160);
   }
 
   function spawnParticles() {
     const rect = wheel.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const cx = rect.width/2;
+    const cy = rect.height/2;
 
-    for (let i = 0; i < 28; i++) {
-      const p = document.createElement("div");
-      p.className = "particle";
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 80 + Math.random() * 80;
-      const dx = Math.cos(angle) * distance;
-      const dy = Math.sin(angle) * distance;
-      p.style.setProperty("--dx", dx + "px");
-      p.style.setProperty("--dy", dy + "px");
-      p.style.left = centerX + "px";
-      p.style.top = centerY + "px";
-
+    for (let i=0;i<25;i++) {
+      const p=document.createElement("div");
+      p.className="particle";
+      const angle=Math.random()*Math.PI*2;
+      const dist=80+Math.random()*80;
+      p.style.setProperty("--dx", Math.cos(angle)*dist+"px");
+      p.style.setProperty("--dy", Math.sin(angle)*dist+"px");
+      p.style.left=cx+"px";
+      p.style.top=cy+"px";
       particlesContainer.appendChild(p);
-      p.addEventListener("animationend", () => {
-        p.remove();
-      });
+      p.addEventListener("animationend",()=>p.remove());
     }
   }
 
-  spinBtn.addEventListener("click", () => {
-    if (spinning) return;
-    spinning = true;
-    spinBtn.disabled = true;
+  spinBtn.addEventListener("click",()=>{
+    if(spinning) return;
+    spinning=true;
+    spinBtn.disabled=true;
+    resultEl.classList.remove("visible");
+    resultEl.textContent="";
+    winnerGlow.style.display="none";
 
     initAudio();
 
-    resultEl.classList.remove("visible");
-    resultEl.textContent = "";
-    winnerGlow.style.display = "none";
+    const base=360*4;
+    const extra=Math.floor(Math.random()*360);
+    const total=base+extra;
 
-    const base = 360 * 4;
-    const extra = Math.floor(Math.random() * 360);
-    const total = base + extra;
+    wheel.style.transform=`rotate(${total}deg)`;
 
-    wheel.style.transform = `rotate(${total}deg)`;
+    const tickInterval=setInterval(playTick,110);
 
-    // son de "click" pendant la rotation
-    if (tickInterval) clearInterval(tickInterval);
-    tickInterval = setInterval(() => {
-      playTick();
-    }, 110);
-
-    setTimeout(() => {
+    setTimeout(()=>{
       clearInterval(tickInterval);
-      tickInterval = null;
 
-      const normalized = ((total % 360) + 360) % 360;
-      const index = Math.floor(((360 - normalized) % 360) / 90);
-      const prize = prizes[index];
+      const normalized=((total % 360)+360)%360;
+      const index=Math.floor(((360-normalized)%360)/90);
+      const prize=prizes[index];
 
-      // placer le glow sur le bon segment
-      winnerGlow.style.display = "block";
-      winnerGlow.style.transform = `rotate(${index * 90}deg)`;
+      winnerGlow.style.display="block";
+      winnerGlow.style.transform=`rotate(${index*90}deg)`;
 
-      // flash, particules, son "win"
-      triggerFlash();
+      flash();
       spawnParticles();
       playWin();
 
-      resultEl.innerHTML =
-        `Result: <a href="https://www.behance.net/maevamaurel1" target="_blank" rel="noopener noreferrer">${prize}</a>`;
+      resultEl.innerHTML=`Result: <a href="https://www.behance.net/maevamaurel1" target="_blank">${prize}</a>`;
       resultEl.classList.add("visible");
 
-      spinning = false;
-      spinBtn.disabled = false;
-    }, 4300);
+      spinning=false;
+      spinBtn.disabled=false;
+    },4300);
   });
 </script>
 </body>

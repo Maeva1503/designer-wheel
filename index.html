@@ -71,18 +71,18 @@
     z-index: 0;
   }
 
-  /* flèche interne type roulette (dans la roue) */
+  /* flèche interne – maintenant orientée VERS L'EXTÉRIEUR (vers le haut) */
   #wheel-wrapper::after {
     content:"";
     position:absolute;
-    top: 18px;
+    top: 34px; /* un peu plus bas pour que la pointe touche la roue */
     left: 50%;
     transform: translateX(-50%);
     width:0;
     height:0;
     border-left:16px solid transparent;
     border-right:16px solid transparent;
-    border-bottom:26px solid #ffffff;
+    border-top:26px solid #ffffff;   /* pointe vers le haut */
     filter:
       drop-shadow(0 0 10px rgba(255,255,255,0.9))
       drop-shadow(0 0 18px rgba(15,181,255,0.9));
@@ -176,7 +176,30 @@
       0 0 20px rgba(15,181,255,0.9);
   }
 
-  /* ticks subtils */
+  /* traits de séparation entre segments */
+  .segment-lines {
+    position:absolute;
+    inset: 26px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:2;
+  }
+
+  .segment-line {
+    position:absolute;
+    left:50%;
+    top:0;
+    width:2px;
+    height:50%;
+    transform-origin:50% 100%;
+    background:linear-gradient(to bottom,
+      rgba(255,255,255,0.9),
+      rgba(255,255,255,0)
+    );
+    opacity:0.7;
+  }
+
+  /* petits ticks (texture) */
   .ticks {
     position:absolute;
     inset: 16px;
@@ -190,15 +213,15 @@
     height:14px;
     left:50%;
     top:0;
-    background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0));
+    background:linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0));
     border-radius:999px;
     transform-origin:50% 162px;
-    opacity:0.75;
+    opacity:0.55;
   }
 
   .tick:nth-child(3n) {
     height: 18px;
-    opacity: 1;
+    opacity: 0.9;
   }
 
   /* particules */
@@ -341,7 +364,23 @@
       <div class="led" style="transform: rotate(330deg);"></div>
     </div>
 
-    <!-- ticks subtils -->
+    <!-- lignes de séparation des 12 segments -->
+    <div class="segment-lines">
+      <div class="segment-line" style="transform: rotate(0deg);"></div>
+      <div class="segment-line" style="transform: rotate(30deg);"></div>
+      <div class="segment-line" style="transform: rotate(60deg);"></div>
+      <div class="segment-line" style="transform: rotate(90deg);"></div>
+      <div class="segment-line" style="transform: rotate(120deg);"></div>
+      <div class="segment-line" style="transform: rotate(150deg);"></div>
+      <div class="segment-line" style="transform: rotate(180deg);"></div>
+      <div class="segment-line" style="transform: rotate(210deg);"></div>
+      <div class="segment-line" style="transform: rotate(240deg);"></div>
+      <div class="segment-line" style="transform: rotate(270deg);"></div>
+      <div class="segment-line" style="transform: rotate(300deg);"></div>
+      <div class="segment-line" style="transform: rotate(330deg);"></div>
+    </div>
+
+    <!-- petits ticks -->
     <div class="ticks">
       <div class="tick" style="transform: rotate(0deg);"></div>
       <div class="tick" style="transform: rotate(30deg);"></div>

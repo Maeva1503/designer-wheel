@@ -176,7 +176,7 @@
       0 0 20px rgba(15,181,255,0.9);
   }
 
-  /* résultat des ticks plus discrets (optionnel, on les garde pour texture) */
+  /* ticks subtils */
   .ticks {
     position:absolute;
     inset: 16px;
@@ -199,6 +199,43 @@
   .tick:nth-child(3n) {
     height: 18px;
     opacity: 1;
+  }
+
+  /* COINS #1 #2 #3 */
+  .segment-coin {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform-origin:50% 50%;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--white-soft);
+    text-shadow:0 0 6px rgba(0,0,0,0.9);
+    z-index:3;
+  }
+
+  .segment-coin .coin {
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    box-shadow:
+      0 0 6px rgba(0,0,0,0.6),
+      0 0 10px rgba(255,255,255,0.6);
+  }
+
+  .segment-coin--1 .coin {
+    background: radial-gradient(circle at 30% 20%, #ffffff, #ffd8a0 40%, #c97a22 100%); /* bronze/orange */
+  }
+
+  .segment-coin--2 .coin {
+    background: radial-gradient(circle at 30% 20%, #ffffff, #e5edf7 40%, #94a3b8 100%); /* argent */
+  }
+
+  .segment-coin--3 .coin {
+    background: radial-gradient(circle at 30% 20%, #ffffff, #fff3a3 40%, #fbbf24 100%); /* or */
   }
 
   /* particules */
@@ -357,6 +394,67 @@
       <div class="tick" style="transform: rotate(330deg);"></div>
     </div>
 
+    <!-- COINS #1 #2 #3 sur chaque segment -->
+    <div class="segment-coin segment-coin--1"
+         style="transform: rotate(0deg) translateY(-130px) rotate(0deg);">
+      <div class="coin"></div><span>#1</span>
+    </div>
+
+    <div class="segment-coin segment-coin--2"
+         style="transform: rotate(30deg) translateY(-130px) rotate(-30deg);">
+      <div class="coin"></div><span>#2</span>
+    </div>
+
+    <div class="segment-coin segment-coin--3"
+         style="transform: rotate(60deg) translateY(-130px) rotate(-60deg);">
+      <div class="coin"></div><span>#3</span>
+    </div>
+
+    <div class="segment-coin segment-coin--1"
+         style="transform: rotate(90deg) translateY(-130px) rotate(-90deg);">
+      <div class="coin"></div><span>#1</span>
+    </div>
+
+    <div class="segment-coin segment-coin--2"
+         style="transform: rotate(120deg) translateY(-130px) rotate(-120deg);">
+      <div class="coin"></div><span>#2</span>
+    </div>
+
+    <div class="segment-coin segment-coin--3"
+         style="transform: rotate(150deg) translateY(-130px) rotate(-150deg);">
+      <div class="coin"></div><span>#3</span>
+    </div>
+
+    <div class="segment-coin segment-coin--1"
+         style="transform: rotate(180deg) translateY(-130px) rotate(-180deg);">
+      <div class="coin"></div><span>#1</span>
+    </div>
+
+    <div class="segment-coin segment-coin--2"
+         style="transform: rotate(210deg) translateY(-130px) rotate(-210deg);">
+      <div class="coin"></div><span>#2</span>
+    </div>
+
+    <div class="segment-coin segment-coin--3"
+         style="transform: rotate(240deg) translateY(-130px) rotate(-240deg);">
+      <div class="coin"></div><span>#3</span>
+    </div>
+
+    <div class="segment-coin segment-coin--1"
+         style="transform: rotate(270deg) translateY(-130px) rotate(-270deg);">
+      <div class="coin"></div><span>#1</span>
+    </div>
+
+    <div class="segment-coin segment-coin--2"
+         style="transform: rotate(300deg) translateY(-130px) rotate(-300deg);">
+      <div class="coin"></div><span>#2</span>
+    </div>
+
+    <div class="segment-coin segment-coin--3"
+         style="transform: rotate(330deg) translateY(-130px) rotate(-330deg);">
+      <div class="coin"></div><span>#3</span>
+    </div>
+
     <div id="particles"></div>
   </div>
 </div>
@@ -500,3 +598,4 @@
 </script>
 </body>
 </html>
+

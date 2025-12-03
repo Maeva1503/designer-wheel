@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Casino Designer Wheel – Hire Me!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --gold: #ffd86b;
+    --gold-soft: #f7c96c;
+    --bg: #050710;
+    --accent: #ff3366;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at top, #1a2340 0, transparent 55%),
+      radial-gradient(circle at bottom, #050712 0, #02030a 60%);
+    color: #f5f5f5;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
+
+  .glow-ring {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 60%);
+    filter: blur(6px);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .title {
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(255, 216, 107, 0.6);
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  #pointer {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 35px solid var(--gold);
+    filter: drop-shadow(0 0 10px rgba(255, 216, 107, 0.8));
+    transform-origin: 50% 100%;
+    animation: pointerPulse 1.2s ease-in-out infinite alternate;
+    z-index: 5;
+  }
+
+  @keyframes pointerPulse {
+    from {
+      transform: translateY(0) scale(1);
+    }
+    to {
+      transform: translateY(-4px) scale(1.05);
+    }
+  }
+
+  #wheel-wrapper {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 8px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 0 0 4px rgba(255, 255, 255, 0.05),
+      0 0 30px rgba(0, 0, 0, 0.9),
+      0 0 60px rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 55%),
+      conic-gradient(
+        from -90deg,
+        #ff4b6e 0deg 90deg,
+        #3bc8ff 90deg 180deg,
+        #7b5cff 180deg 270deg,
+        #ffe66d 270deg 360deg
+      );
+    position: relative;
+    overflow: hidden;
+    transition: transform 4.2s cubic-bezier(0.12, 0.35, 0.08, 1);
+  }
+
+  #wheel::before {
+    /* outer metallic ring */
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.45);
+    box-shadow:
+      inset 0 0 12px rgba(0, 0, 0, 0.9),
+      0 0 18px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+  }
+
+  #wheel::after {
+    /* inner hub */
+    content: "HIRE ME";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background:
+      radial-gradient(circle at 30% 30%, #ffffff, #f5d679 40%, #8d5b1f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    color: #3b2207;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    box-shadow:
+      0 0 14px rgba(0, 0, 0, 0.8),
+      0 0 40px rgba(255, 216, 107, 0.8);
+  }
+
+  .segment-label {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform-origin: 0% 0%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 18px;
+    color: #fff;
+    font-size: 13px;
+    text-transform: none;
+    text-align: right;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    font-weight: 600;
+  }
+
+  .segment-label span {
+    max-width: 120px;
+    line-height: 1.25;
+  }
+
+  .segment-label:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .segment-label:nth-child(2) {
+    transform: rotate(135deg);
+  }
+  .segment-label:nth-child(3) {
+    transform: rotate(225deg);
+  }
+  .segment-label:nth-child(4) {
+    transform: rotate(315deg);
+  }
+
+  .segment-label:nth-child(4) span {
+    color: #333;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  }
+
+  .ticks {
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .tick {
+    position: absolute;
+    width: 4px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    left: 50%;
+    top: 2px;
+    transform-origin: 50% 178px;
+    border-radius: 999px;
+    opacity: 0.7;
+  }
+
+  .tick:nth-child(4n) {
+    height: 14px;
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  #spinBtn {
+    padding: 12px 34px;
+    font-size: 16px;
+    border-radius: 999px;
+    border: none;
+    background: radial-gradient(circle at 30% 30%, #ffffff, var(--gold));
+    color: #442400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+      0 0 12px rgba(255, 216, 107, 0.6),
+      0 0 18px rgba(0, 0, 0, 0.8);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  }
+
+  #spinBtn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+      0 0 18px rgba(255, 216, 107, 0.9),
+      0 0 26px rgba(0, 0, 0, 0.9);
+    filter: brightness(1.05);
+  }
+
+  #spinBtn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+      0 0 8px rgba(255, 216, 107, 0.6),
+      0 0 14px rgba(0, 0, 0, 0.9);
+  }
+
+  #spinBtn:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #result {
+    min-height: 22px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  #result.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #result span {
+    color: var(--gold-soft);
+    font-weight: 600;
+  }
+
+  .signature {
+    position: fixed;
+    bottom: 14px;
+    right: 18px;
+    font-size: 11px;
+    opacity: 0.55;
+  }
+
+  .signature span {
+    color: var(--gold-soft);
+  }
+
+  @media (max-width: 480px) {
+    #wheel-wrapper {
+      width: 290px;
+      height: 290px;
+    }
+    .glow-ring {
+      width: 340px;
+      height: 340px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-ring"></div>
+
+<div class="container">
+  <div class="title">Designer Jackpot</div>
+  <div class="subtitle">Spin the wheel to see what you win if you hire me.</div>
+
+  <div id="pointer"></div>
+
+  <div id="wheel-wrapper">
+    <div id="wheel">
+      <!-- Ticks around the wheel -->
+      <div class="ticks">
+        <!-- 24 small ticks -->
+        <!-- generated manually for simplicity -->
+        <div class="tick" style="transform: rotate(0deg);"></div>
+        <div class="tick" style="transform: rotate(15deg);"></div>
+        <div class="tick" style="transform: rotate(30deg);"></div>
+        <div class="tick" style="transform: rotate(45deg);"></div>
+        <div class="tick" style="transform: rotate(60deg);"></div>
+        <div class="tick" style="transform: rotate(75deg);"></div>
+        <div class="tick" style="transform: rotate(90deg);"></div>
+        <div class="tick" style="transform: rotate(105deg);"></div>
+        <div class="tick" style="transform: rotate(120deg);"></div>
+        <div class="tick" style="transform: rotate(135deg);"></div>
+        <div class="tick" style="transform: rotate(150deg);"></div>
+        <div class="tick" style="transform: rotate(165deg);"></div>
+        <div class="tick" style="transform: rotate(180deg);"></div>
+        <div class="tick" style="transform: rotate(195deg);"></div>
+        <div class="tick" style="transform: rotate(210deg);"></div>
+        <div class="tick" style="transform: rotate(225deg);"></div>
+        <div class="tick" style="transform: rotate(240deg);"></div>
+        <div class="tick" style="transform: rotate(255deg);"></div>
+        <div class="tick" style="transform: rotate(270deg);"></div>
+        <div class="tick" style="transform: rotate(285deg);"></div>
+        <div class="tick" style="transform: rotate(300deg);"></div>
+        <div class="tick" style="transform: rotate(315deg);"></div>
+        <div class="tick" style="transform: rotate(330deg);"></div>
+        <div class="tick" style="transform: rotate(345deg);"></div>
+      </div>
+
+      <!-- Segment labels (4) -->
+      <div class="segment-label">
+        <span>Hire a promising designer</span>
+      </div>
+      <div class="segment-label">
+        <span>Have a highly motivated designer</span>
+      </div>
+      <div class="segment-label">
+        <span>Work with a very available graphic designer</span>
+      </div>
+      <div class="segment-label">
+        <span>Have an enthusiastic graphic designer</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="spinBtn">Spin</button>
+    <div id="result"></div>
+  </div>
+</div>
+
+<div class="signature">
+  Mini game concept by <span>Your Name</span> – Motion Designer
+</div>
+
+<script>
+  const wheel = document.getElementById("wheel");
+  const button = document.getElementById("spinBtn");
+  const resultEl = document.getElementById("result");
+
+  const prizes = [
+    "Hire a promising designer",
+    "Have a highly motivated designer",
+    "Work with a very available graphic designer",
+    "Have an enthusiastic graphic designer"
+  ];
+
+  let isSpinning = false;
+
+  button.addEventListener("click", () => {
+    if (isSpinning) return;
+    isSpinning = true;
+    button.disabled = true;
+    resultEl.classList.remove("visible");
+    resultEl.textContent = "";
+
+    // Base spins (at least 4 full turns)
+    const baseRotation = 360 * 4;
+    // Add random 0–359 degrees
+    const extraRotation = Math.floor(Math.random() * 360);
+    const totalRotation = baseRotation + extraRotation;
+
+    wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+    // After the animation ends, compute the winning segment
+    setTimeout(() => {
+      const normalized = ((totalRotation % 360) + 360) % 360;
+      // pointer at top, segments 0–3 in 90° steps starting from 0° at top
+      const index = Math.floor(((360 - normalized) % 360) / 90);
+      const prize = prizes[index];
+
+      resultEl.innerHTML = `Result: <span>${prize}</span>`;
+      resultEl.classList.add("visible");
+
+      isSpinning = false;
+      button.disabled = false;
+    }, 4300); // slightly more than CSS transition (4.2s)
+  });
+</script>
+</body>
+</html>
